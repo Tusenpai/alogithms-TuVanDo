@@ -1,0 +1,8 @@
+D:\C#\BT\BT\bin\Debug\BT.exe.config
+D:\C#\BT\BT\bin\Debug\BT.exe
+D:\C#\BT\BT\bin\Debug\BT.pdb
+D:\C#\BT\BT\obj\Debug\BT.csproj.AssemblyReference.cache
+D:\C#\BT\BT\obj\Debug\BT.csproj.SuggestedBindingRedirects.cache
+D:\C#\BT\BT\obj\Debug\BT.csproj.CoreCompileInputs.cache
+D:\C#\BT\BT\obj\Debug\BT.exe
+D:\C#\BT\BT\obj\Debug\BT.pdb
