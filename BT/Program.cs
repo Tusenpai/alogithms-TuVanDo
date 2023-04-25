@@ -23,27 +23,27 @@ namespace BT
         }
         static List<Product> findProductByCategory(List<Product> listProducts, int categoryId)
         {
-            List<Product> result2 = new List<Product>();
-            foreach (Product p in listProducts)
+            List<Product> result = new List<Product>();
+            foreach (Product product in listProducts)
             {
-                if (p.CategoryId == categoryId)
+                if (product.CategoryId == categoryId)
                 {
-                    result2.Add(p);
+                    result.Add(product);
                 }
             }
-            return result2;
+            return result;
         }
         static List<Product> findProductByPrice(List<Product> listProduct, int price)
         {
-            List<Product> result3 = new List<Product>();
-            foreach (Product a in listProduct)
+            List<Product> result = new List<Product>();
+            foreach (Product product in listProduct)
             {
-                if (a.Price <= price)
+                if (product.Price <= price)
                 {
-                    result3.Add(a);
+                    result.Add(product);
                 }
             }
-            return result3;
+            return result;
         }
         static void Main(string[] args)
         {
