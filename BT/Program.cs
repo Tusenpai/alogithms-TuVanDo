@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -45,6 +46,82 @@ namespace BT
             }
             return result;
         }
+        static List<Product> sortByPrice(List<Product> listProduct)
+        {
+            for (int i = 0; i < listProduct.Count - 1; i++)
+            {
+                //lặp theo cặp
+                for (int j = 0; j < listProduct.Count - i - 1; j++)
+                {
+                    if (listProduct[j].Price > listProduct[j + 1].Price)
+                    {
+                        Product temp = listProduct[j];
+                        listProduct[j] = listProduct[j + 1];
+                        listProduct[j + 1] = temp;
+                    }
+                }
+            }
+            return listProduct;
+        }
+        static List<Product> sortByName(List<Product> listProduct)
+        {
+            for (int i = 1; i < listProduct.Count; i++)
+            {
+                Product keyProduct = listProduct[i];
+                int j = i - 1;
+
+                while (j >= 0 && listProduct[j].Name.Length < keyProduct.Name.Length)
+                {
+                    listProduct[j + 1] = listProduct[j];
+                    j--;
+                }
+                listProduct[j + 1] = keyProduct;
+            }
+            return listProduct;
+        }
+        static void sortByCategoryName(List<Product> listProduct, List<Category> listCategorys)
+        {
+            var sx = listCategorys[0].name.ToCharArray()[0] < listCategorys[1].name.ToCharArray()[0];
+            for (int i = 1; i < listCategorys.Count; i++)
+            {
+                
+            }
+     
+        }
+        static List<Product> minByPrice(List<Product> listProduct)
+        {
+            for (int i = 0; i < listProduct.Count - 1; i++)
+            {
+                //lặp theo cặp
+                for (int j = 0; j < listProduct.Count - i - 1; j++)
+                {
+                    if (listProduct[j].Price > listProduct[j + 1].Price)
+                    {
+                        Product temp = listProduct[j];
+                        listProduct[j] = listProduct[j + 1];
+                        listProduct[j + 1] = temp;
+                    }
+                }
+            }
+            return listProduct;
+        }
+        static List<Product> maxByPrice(List<Product> listProduct)
+        {
+            for (int i = 0; i < listProduct.Count - 1; i++)
+            {
+                //lặp theo cặp
+                for (int j = 0; j < listProduct.Count - i - 1; j++)
+                {
+                    if (listProduct[j].Price < listProduct[j + 1].Price)
+                    {
+                        Product temp = listProduct[j];
+                        listProduct[j] = listProduct[j + 1];
+                        listProduct[j + 1] = temp;
+                    }
+                }
+            }
+            return listProduct;
+        }
         static void Main(string[] args)
         {
             int luachon, b;
@@ -61,9 +138,22 @@ namespace BT
                 new Product { Name = "Monitor", Price = 120, Quality = 28, CategoryId = 2 },
                 new Product { Name = "Case", Price = 120, Quality = 28, CategoryId = 5 }
             };
+            List<Category> category = new List<Category>()
+            {
+                new Category {id = 1, name ="Computer"},
+                new Category {id = 2, name ="Memory"},
+                new Category {id = 3, name ="Card"},
+                new Category {id = 4, name ="Acsesory"}
+            };
             Console.WriteLine("4.findProduct");
             Console.WriteLine("5.findProductbyCategory");
             Console.WriteLine("6.findProductbyPrice");
+            Console.WriteLine("11.sortByPrice");
+            Console.WriteLine("12.sortByName");
+            Console.WriteLine("13.sortByCategoryName");
+            Console.WriteLine("14.mapProductByCategory");
+            Console.WriteLine("15.minByPrice");
+            Console.WriteLine("16.maxByPrice");
             Console.WriteLine("----------------------- ");
             Console.Write("Chon so bai: ");
             luachon = int.Parse(Console.ReadLine());
@@ -88,9 +178,10 @@ namespace BT
                         Console.WriteLine($"Chat luong: {product.Quality}");
                         Console.WriteLine($"CategoryId: {product.CategoryId}");
                         Console.WriteLine("--------------------------");
-                        Console.ReadLine();
+                        
                     }
-                break;
+                    Console.ReadLine();
+                    break;
                 case 6:
                     int sprice = 50;
                     List<Product> result3 = findProductByPrice(products, sprice);
@@ -100,12 +191,62 @@ namespace BT
                         Console.WriteLine($"Gia: {product.Price}");
                         Console.WriteLine($"Chat luong: {product.Quality}");
                         Console.WriteLine($"CategoryId: {product.CategoryId}");
-                        Console.WriteLine("--------------------------");
-                        Console.ReadLine();
+                        Console.WriteLine("--------------------------"); 
                     }
+                    Console.ReadLine();
                     break;
-                
+                case 11:
+                    List<Product> result4 = sortByPrice(products);
+                    foreach (Product product in result4)
+                    {
+                        Console.WriteLine($"Ten: {product.Name} | Gia: {product.Price} | Chat luong: {product.Quality} CategoryId: {product.CategoryId} " );
+                        
+                    }
+                    Console.ReadLine();
+                    break;
+                case 12:
+                    List<Product> result5 = sortByName(products);
+                    foreach (Product product in result5)
+                    {
+                        Console.WriteLine($"Ten: {product.Name} | Gia: {product.Price} | Chat luong: {product.Quality} CategoryId: {product.CategoryId} ");
+                       
+                    }
+                    Console.ReadLine();
+                    break;
+                case 13:
+                    Console.WriteLine("Chua hoan thanh!");
+                    Console.ReadLine();
+                    break;
+                case 14:
+                    sortByCategoryName(products, category);
+                    Console.ReadLine();
+                    break;
+                case 15:
+                    List<Product> result6 = minByPrice(products);
+                    Product p = result6[0];
+                    Console.WriteLine("San pham co gia nho nhat");
+                    Console.WriteLine($"Ten: {p.Name}");
+                    Console.WriteLine($"Gia: {p.Price}");
+                    Console.WriteLine($"Chat luong: {p.Quality}");
+                    Console.WriteLine($"CategoryId: {p.CategoryId}");
+                    Console.WriteLine("--------------------------");
+                    Console.ReadKey();
+                    break;
+                 case 16:
+                    List<Product> result7 = maxByPrice(products);
+                    Product pmax = result7[0];
+                    Console.WriteLine("San pham co gia lon nhat");
+                    Console.WriteLine($"Ten: {pmax.Name}");
+                    Console.WriteLine($"Gia: {pmax.Price}");
+                    Console.WriteLine($"Chat luong: {pmax.Quality}");
+                    Console.WriteLine($"CategoryId: {pmax.CategoryId}");
+                    Console.WriteLine("--------------------------");
+                    Console.ReadKey();
+                    break;
+                    
             }
+            
+
 
 
         }
