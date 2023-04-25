@@ -88,39 +88,30 @@ namespace BT
             }
      
         }
-        static List<Product> minByPrice(List<Product> listProduct)
+        static Product minByPrice(List<Product> listProduct)
         {
-            for (int i = 0; i < listProduct.Count - 1; i++)
+            Product minProduct = listProduct[0];
+            foreach (Product p in listProduct)
             {
-                //lặp theo cặp
-                for (int j = 0; j < listProduct.Count - i - 1; j++)
+                if (p.Price < minProduct.Price)
                 {
-                    if (listProduct[j].Price > listProduct[j + 1].Price)
-                    {
-                        Product temp = listProduct[j];
-                        listProduct[j] = listProduct[j + 1];
-                        listProduct[j + 1] = temp;
-                    }
+                    minProduct = p;
                 }
             }
-            return listProduct;
+            return minProduct;
         }
-        static List<Product> maxByPrice(List<Product> listProduct)
+
+        static Product maxByPrice(List<Product> listProduct)
         {
-            for (int i = 0; i < listProduct.Count - 1; i++)
+            Product maxProduct = listProduct[0];
+            foreach (Product p in listProduct)
             {
-                //lặp theo cặp
-                for (int j = 0; j < listProduct.Count - i - 1; j++)
+                if (p.Price > maxProduct.Price)
                 {
-                    if (listProduct[j].Price < listProduct[j + 1].Price)
-                    {
-                        Product temp = listProduct[j];
-                        listProduct[j] = listProduct[j + 1];
-                        listProduct[j + 1] = temp;
-                    }
+                    maxProduct = p;
                 }
             }
-            return listProduct;
+            return maxProduct;
         }
         static void Main(string[] args)
         {
@@ -222,28 +213,26 @@ namespace BT
                     Console.ReadLine();
                     break;
                 case 15:
-                    List<Product> result6 = minByPrice(products);
-                    Product p = result6[0];
+                    Product result6 = minByPrice(products);
                     Console.WriteLine("San pham co gia nho nhat");
-                    Console.WriteLine($"Ten: {p.Name}");
-                    Console.WriteLine($"Gia: {p.Price}");
-                    Console.WriteLine($"Chat luong: {p.Quality}");
-                    Console.WriteLine($"CategoryId: {p.CategoryId}");
+                    Console.WriteLine($"Ten: {result6.Name}");
+                    Console.WriteLine($"Gia: {result6.Price}");
+                    Console.WriteLine($"Chat luong: {result6.Quality}");
+                    Console.WriteLine($"CategoryId: {result6.CategoryId}");
                     Console.WriteLine("--------------------------");
                     Console.ReadKey();
                     break;
                  case 16:
-                    List<Product> result7 = maxByPrice(products);
-                    Product pmax = result7[0];
+                    Product result7 = maxByPrice(products);
                     Console.WriteLine("San pham co gia lon nhat");
-                    Console.WriteLine($"Ten: {pmax.Name}");
-                    Console.WriteLine($"Gia: {pmax.Price}");
-                    Console.WriteLine($"Chat luong: {pmax.Quality}");
-                    Console.WriteLine($"CategoryId: {pmax.CategoryId}");
+                    Console.WriteLine($"Ten: {result7.Name}");
+                    Console.WriteLine($"Gia: {result7.Price}");
+                    Console.WriteLine($"Chat luong: {result7.Quality}");
+                    Console.WriteLine($"CategoryId: {result7.CategoryId}");
                     Console.WriteLine("--------------------------");
                     Console.ReadKey();
                     break;
-                    
+
             }
             
 
