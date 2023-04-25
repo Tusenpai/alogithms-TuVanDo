@@ -19,7 +19,7 @@ namespace BT
                     return product;
                 }
             }
-            return null; 
+            return null;
         }
         static List<Product> findProductByCategory(List<Product> listProducts, int categoryId)
         {
@@ -81,12 +81,12 @@ namespace BT
                 case 5:
                     int categoryId = 2;
                     List<Product> result2 = findProductByCategory(products, categoryId);
-                    foreach (Product p in result2)
+                    foreach (Product product in result2)
                     {
-                        Console.WriteLine($"Ten: {p.Name}");
-                        Console.WriteLine($"Gia: {p.Price}");
-                        Console.WriteLine($"Chat luong: {p.Quality}");
-                        Console.WriteLine($"CategoryId: {p.CategoryId}");
+                        Console.WriteLine($"Ten: {product.Name}");
+                        Console.WriteLine($"Gia: {product.Price}");
+                        Console.WriteLine($"Chat luong: {product.Quality}");
+                        Console.WriteLine($"CategoryId: {product.CategoryId}");
                         Console.WriteLine("--------------------------");
                         Console.ReadLine();
                     }
@@ -94,12 +94,12 @@ namespace BT
                 case 6:
                     int sprice = 50;
                     List<Product> result3 = findProductByPrice(products, sprice);
-                    foreach (Product p in result3)
+                    foreach (Product product in result3)
                     {
-                        Console.WriteLine($"Ten: {p.Name}");
-                        Console.WriteLine($"Gia: {p.Price}");
-                        Console.WriteLine($"Chat luong: {p.Quality}");
-                        Console.WriteLine($"CategoryId: {p.CategoryId}");
+                        Console.WriteLine($"Ten: {product.Name}");
+                        Console.WriteLine($"Gia: {product.Price}");
+                        Console.WriteLine($"Chat luong: {product.Quality}");
+                        Console.WriteLine($"CategoryId: {product.CategoryId}");
                         Console.WriteLine("--------------------------");
                         Console.ReadLine();
                     }
