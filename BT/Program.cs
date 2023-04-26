@@ -79,15 +79,59 @@ namespace BT
             }
             return listProduct;
         }
-        static void sortByCategoryName(List<Product> listProduct, List<Category> listCategorys)
+        public static List<Product> sortByCategoryName(List<Product>  listProducts, List<Category> listcategory)
         {
-            var sx = listCategorys[0].name.ToCharArray()[0] < listCategorys[1].name.ToCharArray()[0];
-            for (int i = 1; i < listCategorys.Count; i++)
+            List<string> sortedCategoryNames = listcategory.OrderBy(c => c.name).Select(c => c.name).ToList();
+            List<Product> sortedProducts = new List<Product>();
+
+            foreach (string categoryName in sortedCategoryNames)
             {
-                
+                foreach (Product product in listProducts)
+                {
+                    if (product.CategoryId != null)
+                    {
+                        Category productCategory = listcategory.FirstOrDefault(c => c.id == product.CategoryId);
+
+                        if (productCategory != null && productCategory.name == categoryName)
+                        {
+                            sortedProducts.Add(product);
+                        }
+                    }
+                }
             }
-     
+            return sortedProducts;
         }
+        public static List<Product> MapProductByCategory(List<Product> listProduct, List<Category> listCategory)
+        {
+            Dictionary<int, string> categoryNames = new Dictionary<int, string>();
+            foreach (Category category in listCategory)
+            {
+                int categoryId = category.id;
+                string categoryName = category.name;
+                categoryNames[categoryId] = categoryName;
+            }
+            List<Product> mappedProducts = new List<Product>();
+            foreach (Product product in listProduct)
+            {
+                int categoryId = product.CategoryId;
+                if (categoryNames.ContainsKey(categoryId))
+                {
+                    string categoryName = categoryNames[categoryId];
+                    Product mappedProduct = new Product
+                    {
+                        Name = product.Name,
+                        Price = product.Price,
+                        Quality = product.Quality,
+                        CategoryId = product.CategoryId,
+                        CategoryName = categoryName 
+                    };
+                    mappedProducts.Add(mappedProduct);
+                }
+            }
+            return mappedProducts;
+        }
+
+
         static Product minByPrice(List<Product> listProduct)
         {
             Product minProduct = listProduct[0];
@@ -113,6 +157,48 @@ namespace BT
             }
             return maxProduct;
         }
+        static double recursionCalSalary(double salary, int n)
+        {
+            if (n == 1)
+            {
+                return salary;
+            }
+            else
+            {
+                return recursionCalSalary(salary * 1.1, n - 1);
+            }
+            
+        }
+        static double notRecursionCalSalary(double salary, int n)
+        {
+            double result = salary;
+            for (int i = 1; i < n; i++)
+            {
+                result *= 1.1;
+            }
+            return result;
+        }
+        static int recursionCalMonth(double money, double rate, int month = 0)
+        {
+
+            if (money >= 2 * money)
+            {
+                month++;
+                double interest = money * rate / 100;
+                money += interest;
+                return recursionCalMonth(money, rate, month);
+                
+            }
+            else
+            {
+                return month;
+            }
+        }
+        static int notRecursionCalMonth(double money, double rate)
+        {
+            int month = (int)(money / money * rate);
+            return month;
+        }
         static void Main(string[] args)
         {
             int luachon, b;
@@ -127,7 +213,7 @@ namespace BT
                 new Product { Name = "Mouse", Price = 25, Quality = 50, CategoryId = 4 },
                 new Product { Name = "VGA", Price = 60, Quality = 35, CategoryId = 3 },
                 new Product { Name = "Monitor", Price = 120, Quality = 28, CategoryId = 2 },
-                new Product { Name = "Case", Price = 120, Quality = 28, CategoryId = 5 }
+                new Product { Name = "Case", Price = 120, Quality = 28, CategoryId = 1 }
             };
             List<Category> category = new List<Category>()
             {
@@ -145,6 +231,8 @@ namespace BT
             Console.WriteLine("14.mapProductByCategory");
             Console.WriteLine("15.minByPrice");
             Console.WriteLine("16.maxByPrice");
+            Console.WriteLine("21.calSalary");
+            Console.WriteLine("22.calMonth");
             Console.WriteLine("----------------------- ");
             Console.Write("Chon so bai: ");
             luachon = int.Parse(Console.ReadLine());
@@ -191,7 +279,6 @@ namespace BT
                     foreach (Product product in result4)
                     {
                         Console.WriteLine($"Ten: {product.Name} | Gia: {product.Price} | Chat luong: {product.Quality} CategoryId: {product.CategoryId} " );
-                        
                     }
                     Console.ReadLine();
                     break;
@@ -205,11 +292,22 @@ namespace BT
                     Console.ReadLine();
                     break;
                 case 13:
-                    Console.WriteLine("Chua hoan thanh!");
+                    List<Product> result9 = sortByCategoryName(products, category);
+                    foreach (Product product in result9)
+                    {
+                        Console.WriteLine($"Ten: {product.Name} | Gia: {product.Price} | Chat luong: {product.Quality} CategoryId: {product.CategoryId} ");
+
+
+                    }
                     Console.ReadLine();
                     break;
                 case 14:
-                    sortByCategoryName(products, category);
+                    List<Product> mappedProducts = MapProductByCategory(products, category);
+
+                    foreach (Product product in mappedProducts)
+                    {
+                        Console.WriteLine($"Ten: {product.Name} | Gia: {product.Price}, Chat luong: {product.Quality}, Category: {product.CategoryName}");
+                    }
                     Console.ReadLine();
                     break;
                 case 15:
@@ -230,6 +328,23 @@ namespace BT
                     Console.WriteLine($"Chat luong: {result7.Quality}");
                     Console.WriteLine($"CategoryId: {result7.CategoryId}");
                     Console.WriteLine("--------------------------");
+                    Console.ReadKey();
+                    break;
+                 case 21:
+                    double salary = 10000000;
+                    int n = 5;
+                    double result8 = recursionCalSalary(salary, n);
+                    double result10 = notRecursionCalSalary(salary, n);
+                    Console.WriteLine($"De qui: Luong {salary} sau {n} thang {result8}");
+                    Console.WriteLine($"Khong de qui: Luong {salary} sau {n} thang {result10}");
+                    Console.ReadKey();
+                    break;
+                 case 22:
+                    double money = 20000, rate = 10;
+                    double result11 = recursionCalMonth(money, rate, 0);
+                    double result12 = notRecursionCalMonth(money, rate);
+                    Console.WriteLine($"De qui: So tien {money} lai suat {rate}% tang gap doi can {result11} thang");
+                    Console.WriteLine($"Khong de qui: So tien {money} lai suat {rate}% tang gap doi can {result12} thang");
                     Console.ReadKey();
                     break;
 
