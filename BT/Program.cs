@@ -135,11 +135,11 @@ namespace BT
         static Product minByPrice(List<Product> listProduct)
         {
             Product minProduct = listProduct[0];
-            foreach (Product p in listProduct)
+            foreach (Product product in listProduct)
             {
-                if (p.Price < minProduct.Price)
+                if (product.Price < minProduct.Price)
                 {
-                    minProduct = p;
+                    minProduct = product;
                 }
             }
             return minProduct;
@@ -148,11 +148,11 @@ namespace BT
         static Product maxByPrice(List<Product> listProduct)
         {
             Product maxProduct = listProduct[0];
-            foreach (Product p in listProduct)
+            foreach (Product product in listProduct)
             {
-                if (p.Price > maxProduct.Price)
+                if (product.Price > maxProduct.Price)
                 {
-                    maxProduct = p;
+                    maxProduct = product;
                 }
             }
             return maxProduct;
@@ -178,25 +178,33 @@ namespace BT
             }
             return result;
         }
-        static int recursionCalMonth(double money, double rate, int month = 0)
+        static int recursionCalMonth(double money, double rate, int month, double target)
         {
-
-            if (money >= 2 * money)
+            if (money >= target) 
+            {
+                return month;
+            }
+            else
             {
                 month++;
                 double interest = money * rate / 100;
                 money += interest;
-                return recursionCalMonth(money, rate, month);
+                return recursionCalMonth(money, rate, month, target);
                 
-            }
-            else
-            {
-                return month;
             }
         }
         static int notRecursionCalMonth(double money, double rate)
         {
-            int month = (int)(money / money * rate);
+            //int month = (int)(money / money * rate);
+            int month = 0;
+            double target = 2 * money;
+
+            while (money < target)
+            {
+                month++;
+                double interest = money * rate / 100;
+                money += interest;
+            }
             return month;
         }
         static void Main(string[] args)
@@ -340,8 +348,8 @@ namespace BT
                     Console.ReadKey();
                     break;
                  case 22:
-                    double money = 20000, rate = 10;
-                    double result11 = recursionCalMonth(money, rate, 0);
+                    double money = 20000, rate = 10, target = 2*money;
+                    double result11 = recursionCalMonth(money, rate, 0, target);
                     double result12 = notRecursionCalMonth(money, rate);
                     Console.WriteLine($"De qui: So tien {money} lai suat {rate}% tang gap doi can {result11} thang");
                     Console.WriteLine($"Khong de qui: So tien {money} lai suat {rate}% tang gap doi can {result12} thang");
